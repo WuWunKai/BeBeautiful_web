@@ -10,7 +10,7 @@ include("config.php");
       $phone = $_GET['phone'];
     }
 
-    $sql = "UPDATE reservation SET status = 'Onsite',SigninTime = '$Time' WHERE phone = '$phone'";
+    $sql = "UPDATE reservation SET status = 'Onsite',SigninTime = '$Time' WHERE phone = '$phone' AND status = 'Pending'";
     // mysqli_query($db,$sql)or die ("無法新增".mysql_error()); //執行sql語法
     if(mysqli_query($db,$sql)){
       echo "已簽到";

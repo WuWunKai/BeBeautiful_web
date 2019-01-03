@@ -22,7 +22,7 @@
 
     if (empty($_GET['name'])) {
       $name = "";
-      echo "未輸入性名,";
+      echo "未輸入姓名,";
     }else {
       $name = $_GET['name'];
     }
@@ -35,7 +35,7 @@
         $item = $_GET['item'];
       }else {
         $item = "";
-        echo "項目錯誤"."<br/>";
+        echo "項目輸入錯誤,"."<br/>";
       }
     }
 
@@ -54,11 +54,15 @@
 
 
     if($phone!="" && $name!="" && $item!="" && $reservationDate!=""){
-
+      $member_count = 0;
       $sql = 	"SELECT * FROM member WHERE phone = $phone";
       $result = mysqli_query($db,$sql);
       while($row = mysqli_fetch_array($result)) {
-        $is_frist = "false";
+        $member_count++;
+        if($row['birthday']!=""){
+          $is_frist = "false";
+        }
+
       }
       // echo "Time".$Time."<br/>";
       // echo "reservationDate".$reservationDate."<br/>";
@@ -75,14 +79,14 @@
               $is_have_reserve="true";
               $id = $row2['id'];
               $sql3 = "UPDATE reservation SET reservationDate = '$reservationDate',item = '$item' WHERE id = '$id'";
-              echo "sql:".$sql3;
+              //echo "sql:".$sql3;
               mysqli_query($db,$sql3)or die ("無法新增".mysql_error()); //執行sql語法
-              echo "修改預約成功";
+              echo "修改預約成功,";
               // code...
               break;
             case 'Onsite':
               $is_have_reserve="true";
-              echo "此客人再進行療程不得修改預約";
+              echo "此客人再進行療程不得修改預約,";
                 // code...
               break;
           }
@@ -91,24 +95,17 @@
         if($is_have_reserve=="false"){
           $sql = "INSERT INTO reservation (Id,creatDate,SigninTime,reservationDate,status,phone,name,item,firstCome) VALUES (Null,'$Time','','$reservationDate','Pending','$phone','$name','$item','$is_frist')";
           mysqli_query($db,$sql)or die ("無法新增".mysql_error()); //執行sql語法
-          echo "新增預約成功";
+          echo "新增預約成功,";
         }
 
-        if($is_frist=="true"){
+        if($member_count=="0"){
           $sql = "INSERT INTO member (Id,name,birthday,phone) VALUES (Null,'$name','','$phone')";
           mysqli_query($db,$sql)or die ("無法新增".mysql_error()); //執行sql語法
-          echo ",新增會員成功";
+          echo "新增會員成功";
         }
       }else {
         echo "預約時間不能是過去的時間";
       }
-
-
-
-
-
-
-
     }
 
 
