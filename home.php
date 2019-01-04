@@ -231,7 +231,7 @@ include("config.php");
 
 
                                     <?
-                                    include 'api/get_Reservation.php';
+                                    include 'api/get_reserve_list.php';
                                     ?>
 
                                 </table>
@@ -259,7 +259,7 @@ include("config.php");
 
                                     <?
                                     $_GET['Status'] = 'Onsite';
-                                    include  'api/get_Reservation.php';
+                                    include  'api/get_reserve_list.php';
                                     ?>
                                 </table>
 
